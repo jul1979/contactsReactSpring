@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import org.springframework.data.domain.Page;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,7 +32,7 @@ public class ContactResource {
     @PostMapping
     public ResponseEntity<Contact> createContact(@RequestBody Contact contact) {
         // return ResponseEntity.ok().body(contactService.createContact(contact));
-        return ResponseEntity.created(URI.create("/contacts/<user_ID>")).body(contactService.createContact(contact));
+        return ResponseEntity.created(URI.create("/contacts/userID")).body(contactService.createContact(contact));
     }
 
     @GetMapping
@@ -41,7 +42,7 @@ public class ContactResource {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Contact> getContacts(@PathVariable(value = "id") String id) {
+    public ResponseEntity<Contact> getContact(@PathVariable(value = "id") String id) {
         return ResponseEntity.ok().body(contactService.getContact(id));
     }
 
@@ -50,7 +51,7 @@ public class ContactResource {
         return ResponseEntity.ok().body(contactService.uploadPhoto(id, file));
     }
 
-    @GetMapping(path = "/image/{filename}")
+    @GetMapping(path = "/image/{filename}", produces = { MediaType.IMAGE_PNG_VALUE, MediaType.IMAGE_JPEG_VALUE })
     public byte[] getPhoto(@PathVariable String filename) throws IOException {
         return Files.readAllBytes(Paths.get(PHOTO_DIRECTORY + filename));
     }

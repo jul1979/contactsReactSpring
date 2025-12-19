@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://192.168.1.216:5432/testdatabase
+    url: jdbc:postgresql://localhost:5432/testdatabase
     username: postgresuser
     password: securepassword
 
@@ -24,6 +24,10 @@ spring:
   mvc:
     async:
       request-timeout: 3600000
+
+  output:
+    ansi:
+      enabled: always
 
 server:
   port: 8081
